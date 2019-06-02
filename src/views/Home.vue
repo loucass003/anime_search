@@ -1,5 +1,4 @@
 <template>
-  <!-- <HelloWorld /> -->
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs8 offset-xs2>
@@ -14,13 +13,14 @@
           <v-data-table
             :headers="headers"
             :items="torents"
+            item-key='id.id'
             class="elevation-1"
           >
-            <template v-slot:items="props">
-              <td>{{ props.item.id }}</td>
-              <td>{{ props.item.name }}</td>
-              <td>{{ props.item.seeders }}</td>
-              <td>{{ props.item.leechers }}</td>
+            <template v-slot:items="props" >
+              <tr @click="anime(props.item.id)">
+                <td>{{ props.item.id.id }}</td>
+                <td>{{ props.item.title }}</td>
+              </tr>
             </template>
           </v-data-table>
       </v-flex>
@@ -41,8 +41,6 @@
         headers: [
           { text: 'ID', value: 'id' },
           { text: 'Name', value: 'name' },
-          { text: 'Seeders', value: 'seeders' },
-          { text: 'Leechers', value: 'leechers' }
         ],
         torents: [],
         search: ''
@@ -58,13 +56,16 @@
     },
     methods: {
       doSearch() {
-        console.log("call");
         API({ select: ['mal'] })
-          .search({ search: this.search })
-          .then((data) => {
-            console.log(data);
-           // this.torents = torrents
+          .search({ search: this.search, limit: 15 })
+          .then(([mal]) => {
+            this.torents = mal;
+            console.log(mal);
           })
+      },
+      anime(id) {
+        console.log(id);
+        this.$router.push({ name: 'anime', params: { api: id.type, id: id.id }});
       }
     }
   }

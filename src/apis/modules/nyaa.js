@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { Torrent } from '../interfaces'
+import implement from 'implement-js'
 
 export default () => {
 	const API_URL = "https://nyaa.pantsu.cat/api/search/"
@@ -11,7 +13,22 @@ export default () => {
 					page,
 					sort,
 				}
-			}).then(({ data }) => data);
+			}).then(({ data: { torrents } }) => torrents.map(({
+				id,
+				torrent: url,
+				magnet,
+				name,
+				description: synopsis
+			}) => {
+				const data = {
+					id: { type: 'nyaa', id: String(id) },
+					url,
+					magnet,
+					name,
+					synopsis
+				};
+				return implement(Torrent)(data);
+			}));
 		}
 	}
 }

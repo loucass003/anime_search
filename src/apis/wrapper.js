@@ -18,7 +18,8 @@ export default (options) => {
 			return Promise.all(mods)
 				.then(ps => ps.filter(p => p != ERROR))
 		},
-		search: (params = {search: '', limit: 50, page: 0, sort: 'id'}) => self.call('search', params)
+		search: (params = {search: '', limit: 15, page: 0, sort: 'id'}) => self.call('search', params),
+		get: (params = { id: 0 }) => self.call('get', params)
 	};
 	return self;
 }

@@ -11,6 +11,7 @@
     "debounce": "^1.2.0",
     "implement-js": "0.0.26",
     "lodash.debounce": "^4.0.8",
+    "torrent-name-parser": "^0.6.5",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.5",
